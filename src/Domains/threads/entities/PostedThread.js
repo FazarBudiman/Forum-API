@@ -1,11 +1,14 @@
 class PostedThread {
     constructor(payload) {
+        this._verifyPayload(payload)
+
         const { id, title, owner } = payload
+        
         this.id = id
         this.title = title
         this.owner = owner
 
-        this._verifyPayload(payload)
+        
     }
 
     _verifyPayload({ id, title, owner }){

@@ -8,20 +8,12 @@ class AuthenticationRepositoryPostgres extends AuthenticationRepository {
   }
 
   async addToken(token) {
-    const query = {
-      text: 'INSERT INTO authentications VALUES ($1)',
-      values: [token],
-    };
-
+    const query = `INSERT INTO authentications VALUES ('${token}')`
     await this._pool.query(query);
   }
 
   async checkAvailabilityToken(token) {
-    const query = {
-      text: 'SELECT * FROM authentications WHERE token = $1',
-      values: [token],
-    };
-
+    const query = `SELECT * FROM authentications WHERE token = '${token}'`
     const result = await this._pool.query(query);
 
     if (result.rows.length === 0) {
@@ -30,11 +22,7 @@ class AuthenticationRepositoryPostgres extends AuthenticationRepository {
   }
 
   async deleteToken(token) {
-    const query = {
-      text: 'DELETE FROM authentications WHERE token = $1',
-      values: [token],
-    };
-
+    const query = `DELETE FROM authentications WHERE token = '${token}'`;
     await this._pool.query(query);
   }
 }

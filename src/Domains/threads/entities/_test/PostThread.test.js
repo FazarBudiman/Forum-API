@@ -23,7 +23,7 @@ describe('a PostThread entities', () => {
         // Action and Assert
         expect(() => new PostThread(payload)).toThrowError('POST_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION')
     })
-    it('should create postThreas object correctyly', () => {
+    it('should create postThread object correctyly', () => {
         // Arrange
         const payload = {
             title: 'Senin',
