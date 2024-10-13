@@ -38,6 +38,18 @@ class CommentRepositoryPostgres extends CommentRepository{
         const query = `UPDATE comments SET is_delete = true WHERE id = '${commentId}'`
         await this._pool.query(query)
     }
+
+    async getCommentInThread(threadId){
+        const query = `SELECT c.id, u.username ,c."createdAt" as date, c."content", c.is_delete FROM comments c  right join threads t on c.threads_id = t.id right join users u on c."owner" = u.id WHERE t.id  = '${threadId}' order by "createdAt" asc ;`
+        const result = await this._pool.query(query)
+        let comments = result.rows
+        comments.forEach(comment => {
+            if (comment.is_delete) {
+                comment.content = '**komentar telah dihapus**'
+            }
+        })
+        return comments
+    }
 }
 
 module.exports = CommentRepositoryPostgres;

@@ -12,8 +12,11 @@ class CommentRepository {
     }
 
     async deleteComment(id){
-        throw new Error("COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED");
-        
+        throw new Error("COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED");   
+    }
+
+    async getCommentInThread(threadId){
+        throw new Error("COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED");   
     }
 }
 
