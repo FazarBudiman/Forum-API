@@ -46,4 +46,5 @@ describe('a PostComment entities', () => {
         expect(is_delete).toEqual(payload.is_delete)
         expect(createdAt).toEqual(payload.createdAt)
     })
+    
 })

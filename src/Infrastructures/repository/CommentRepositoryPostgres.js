@@ -17,14 +17,13 @@ class CommentRepositoryPostgres extends CommentRepository{
         return new PostedComment({...result.rows[0]})
     }
 
-    async checkThreadIsExist(id){
-        const query = `SELECT * FROM threads WHERE id = '${id}'`
-        const result = await this._pool.query(query)
-        if (result.rowCount === 0) {
-            throw new NotFoundError('Threads tidak ada')
-        }
-        
-    }
+    // async checkThreadIsExist(id){
+    //     const query = `SELECT * FROM threads WHERE id = '${id}'`
+    //     const result = await this._pool.query(query)
+    //     if (result.rowCount === 0) {
+    //         throw new NotFoundError('Threads tidak ada')
+    //     }
+    // }
 }
 
 module.exports = CommentRepositoryPostgres;

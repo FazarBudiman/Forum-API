@@ -11,9 +11,9 @@ describe('/threads endpoint', () => {
     })
 
     afterEach(async () => {
+        await ThreadsTableTestHelper.cleanTable()
         await UsersTableTestHelper.cleanTable()
         await AuthenticationsTableTestHelper.cleanTable()
-        await ThreadsTableTestHelper.cleanTable()
     })
 
     describe('when POST /threads', () => {
@@ -111,28 +111,6 @@ describe('/threads endpoint', () => {
         it('should return 401 if no token authorizaation', async () => { 
             // Arrange
             const server = await createServer(container)
-
-            // Add User
-            // await server.inject({
-            //     method: 'POST',
-            //     url: '/users',
-            //     payload: {
-            //     username: 'dicoding',
-            //     password: 'secret',
-            //     fullname: 'Dicoding Indonesia',
-            //     },
-            // });
-          
-            // // login user
-            // const loginResponse = await server.inject({
-            //     method: 'POST',
-            //     url: '/authentications',
-            //     payload: {
-            //     username: 'dicoding',
-            //     password: 'secret',
-            //     },
-            // });
-            // const { data: { accessToken } } = JSON.parse(loginResponse.payload);
 
             //   Action
             const response = await server.inject({
