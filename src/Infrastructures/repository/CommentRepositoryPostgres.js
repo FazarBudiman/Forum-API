@@ -1,6 +1,7 @@
 const CommentRepository = require('../../Domains/comments/CommentRepository')
 const NotFoundError = require('../../Commons/exceptions/NotFoundError')
 const PostedComment = require('../../Domains/comments/entities/PostedComment')
+const AuthorizationError = require('../../Commons/exceptions/AuthorizationError')
 
 class CommentRepositoryPostgres extends CommentRepository{
     constructor(pool, idGenerator){
@@ -17,13 +18,26 @@ class CommentRepositoryPostgres extends CommentRepository{
         return new PostedComment({...result.rows[0]})
     }
 
-    // async checkThreadIsExist(id){
-    //     const query = `SELECT * FROM threads WHERE id = '${id}'`
-    //     const result = await this._pool.query(query)
-    //     if (result.rowCount === 0) {
-    //         throw new NotFoundError('Threads tidak ada')
-    //     }
-    // }
+    async checkCommentIsExist(commentId){
+        const query = `SELECT * FROM comments WHERE id = '${commentId}'`
+        const result = await this._pool.query(query)
+        if (result.rowCount === 0) {
+            throw new NotFoundError('Comment tidak ada')
+        }
+    }
+
+    async checkCommentOwner(commentId, commentOwnerId){
+        const query = `SELECT * FROM comments WHERE id = '${commentId}' AND owner = '${commentOwnerId}'`
+        const result = await this._pool.query(query)
+        if (result.rowCount === 0) {
+            throw new AuthorizationError('Comment tidak bisa dihapus, sebab bukan pemilik')
+        }
+    }
+
+    async deleteComment(commentId){
+        const query = `UPDATE comments SET is_delete = true WHERE id = '${commentId}'`
+        await this._pool.query(query)
+    }
 }
 
 module.exports = CommentRepositoryPostgres;

@@ -8,7 +8,7 @@ class ThreadRepository {
     }
     
     async checkThreadIsExist(id){
-        throw new Error("COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED");
+        throw new Error("THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED");
     }
 }
 
