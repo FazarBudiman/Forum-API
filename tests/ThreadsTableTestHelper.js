@@ -1,22 +1,26 @@
 const pool = require('../src/Infrastructures/database/postgres/pool')
 
 const ThreadsTableTestHelper = {
-    async addThread({
-        id, title = 'Senin', body = 'Hari ini adalah hari senin', owner, createdAt = '2024-11-12'
-    }) {
-        const query = `INSERT INTO threads VALUES ('${id}', '${title}', '${body}', '${owner}', '${createdAt}')`
-        await pool.query(query)
-    },
+  async addThread({
+    id,
+    title = 'Senin',
+    body = 'Hari ini adalah hari senin',
+    owner,
+    createdAt = '2024-11-12'
+  }) {
+    const query = `INSERT INTO threads VALUES ('${id}', '${title}', '${body}', '${owner}', '${createdAt}')`
+    await pool.query(query)
+  },
 
-    async getThreadDetail(id){
-        const query = `SELECT * FROM threads WHERE id = '${id}'`
-        const result = await pool.query(query)
-        return result.rows
-    },
+  async getThreadDetail(id) {
+    const query = `SELECT * FROM threads WHERE id = '${id}'`
+    const result = await pool.query(query)
+    return result.rows
+  },
 
-    async cleanTable(){
-        await pool.query('DELETE FROM threads WHERE 1=1')
-    }
+  async cleanTable() {
+    await pool.query('DELETE FROM threads WHERE 1=1')
+  }
 }
 
-module.exports = ThreadsTableTestHelper;
+module.exports = ThreadsTableTestHelper
