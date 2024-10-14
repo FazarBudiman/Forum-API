@@ -13,14 +13,11 @@ class CommentHandler {
       CommentAddUseCase.name
     )
     const { id: owner } = request.auth.credentials
-    const createdAt = new Date().toISOString()
     const { threadId: threadsId } = request.params
     const payload = await {
       ...request.payload,
       owner,
-      createdAt,
       threadsId,
-      isDelete: false
     }
     const addedComment = await commentAddUseCase.execute(payload)
     const response = h.response({

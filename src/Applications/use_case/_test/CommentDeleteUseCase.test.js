@@ -16,6 +16,7 @@ describe('CommentDeleteUseCase', () => {
       .mockImplementation(() => Promise.resolve())
 
     const mockCommentRepository = new CommentRepository()
+    
     mockCommentRepository.checkCommentIsExist = jest
       .fn()
       .mockImplementation(() => Promise.resolve())

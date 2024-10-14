@@ -11,11 +11,9 @@ class ThreadsHandler {
   async postThreadHandler(request, h) {
     const threadAddUseCase = this._container.getInstance(ThreadAddUseCase.name)
     const { id: owner } = request.auth.credentials
-    const createdAt = new Date().toISOString()
     const payload = {
       ...request.payload,
       owner,
-      createdAt
     }
     const addedThread = await threadAddUseCase.execute(payload)
     const response = h.response({

@@ -11,8 +11,6 @@ describe('CommentAddUseCase', () => {
       content: 'P Balap',
       owner: 'user-1231',
       threadsId: 'thread-456',
-      isDelete: true,
-      createdAt: '2024-11-13'
     }
 
     const mockPostedComment = new PostedComment({
@@ -26,7 +24,7 @@ describe('CommentAddUseCase', () => {
 
     mockThreadRepository.checkThreadIsExist = jest
       .fn()
-      .mockImplementation(() => Promise.resolve())
+      .mockImplementation(() => Promise.resolve(useCasePayload.threadsId))
     mockCommentRepository.addComment = jest
       .fn()
       .mockImplementation(() => Promise.resolve(mockPostedComment))
@@ -48,13 +46,12 @@ describe('CommentAddUseCase', () => {
       })
     )
 
+    expect(mockThreadRepository.checkThreadIsExist).toBeCalledWith(useCasePayload.threadsId)
     expect(mockCommentRepository.addComment).toBeCalledWith(
       new PostComment({
-        content: 'P Balap',
-        owner: 'user-1231',
-        threadsId: 'thread-456',
-        isDelete: true,
-        createdAt: '2024-11-13'
+        content: useCasePayload.content,
+        owner: useCasePayload.owner,
+        threadsId: useCasePayload.threadsId,
       })
     )
   })

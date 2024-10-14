@@ -118,9 +118,10 @@ describe('ThreadRepositoryPostgres', () => {
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {})
 
       // Action and Assert
-      await expect(
-        threadRepositoryPostgres.checkThreadIsExist('thread-12345')
-      ).resolves.not.toThrowError(NotFoundError)
+      await expect(threadRepositoryPostgres.checkThreadIsExist('thread-12345')).resolves.not.toThrowError(NotFoundError)
+      const result =  await threadRepositoryPostgres.checkThreadIsExist('thread-12345')
+      expect(result.id).toEqual('thread-12345')
+      expect(result.username).toEqual('dicoding')
     })
   })
 })

@@ -11,9 +11,9 @@ class CommentRepositoryPostgres extends CommentRepository {
   }
 
   async addComment(postComment) {
-    const { content, owner, createdAt, threadsId, isDelete } = postComment
+    const { content, owner, threadsId } = postComment
     const id = `comment-${this._idGenerator()}`
-    const query = `INSERT INTO comments VALUES ('${id}', '${content}', '${owner}', '${threadsId}', '${isDelete}', '${createdAt}') RETURNING id, content, owner`
+    const query = `INSERT INTO comments VALUES ('${id}', '${content}', '${owner}', '${threadsId}', FALSE, NOW()) RETURNING id, content, owner`
     const result = await this._pool.query(query)
     return new PostedComment({ ...result.rows[0] })
   }
@@ -50,13 +50,7 @@ class CommentRepositoryPostgres extends CommentRepository {
                 order by c."createdAt" ASC
         `
     const result = await this._pool.query(query)
-    let comments = result.rows
-    comments.forEach((comment) => {
-      if (comment.is_delete) {
-        comment.content = '**komentar telah dihapus**'
-      }
-    })
-    return comments
+    return result.rows
   }
 }
 

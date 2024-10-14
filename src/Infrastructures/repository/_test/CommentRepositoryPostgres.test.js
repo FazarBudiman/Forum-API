@@ -263,6 +263,9 @@ describe('CommentRepositoryPostgres', () => {
 
       // Assert
       expect(result[0].id).toEqual('comment-123')
+      expect(result[0].username).toEqual('dicoding')
+      expect(result[0].is_delete).toEqual(false)
+      
     }),
       it('should comment in thread is exist even comment is_delete', async () => {
         // Arrange
@@ -296,6 +299,8 @@ describe('CommentRepositoryPostgres', () => {
 
         // Assert
         expect(result[0].id).toEqual('comment-123')
+        expect(result[0].username).toEqual('dicoding')
+        expect(result[0].is_delete).toEqual(true)
       })
   })
 })

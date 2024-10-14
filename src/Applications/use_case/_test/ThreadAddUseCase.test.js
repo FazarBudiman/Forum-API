@@ -10,7 +10,6 @@ describe('ThreadAddUseCase', () => {
       title: 'Senin',
       body: 'Hari ini adalah hari senin',
       owner: 'user-123',
-      createdAt: '2024-12-11'
     }
 
     const mockPostedThread = new PostedThread({
@@ -46,7 +45,7 @@ describe('ThreadAddUseCase', () => {
         title: useCasePayload.title,
         body: useCasePayload.body,
         owner: useCasePayload.owner,
-        createdAt: useCasePayload.createdAt
+        createdAt: new Date().toISOString().split(10)
       })
     )
   })

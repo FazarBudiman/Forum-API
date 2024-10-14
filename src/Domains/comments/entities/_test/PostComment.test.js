@@ -6,7 +6,6 @@ describe('a PostComment entities', () => {
     const payload = {
       content: 'P Balap',
       owner: 'user-dada',
-      threads_id: 'thread-12121'
     }
 
     // Action and Assert
@@ -21,8 +20,6 @@ describe('a PostComment entities', () => {
       content: 123,
       owner: 'user-dada',
       threadsId: 'thread-12121',
-      isDelete: 'daad',
-      createdAt: '2024-11-13'
     }
 
     // Action and Assert
@@ -36,19 +33,14 @@ describe('a PostComment entities', () => {
       content: 'P Balap',
       owner: 'user-1231',
       threadsId: 'thread-456',
-      isDelete: true,
-      createdAt: '2024-11-13'
     }
 
     // Action
-    const { content, owner, threads_id, is_delete, createdAt } =
-      new PostComment(payload)
+    const { content, owner, threadsId} = new PostComment(payload)
 
     // Assert
     expect(content).toEqual(payload.content)
     expect(owner).toEqual(payload.owner)
-    expect(threads_id).toEqual(payload.threads_id)
-    expect(is_delete).toEqual(payload.is_delete)
-    expect(createdAt).toEqual(payload.createdAt)
+    expect(threadsId).toEqual(payload.threadsId)
   })
 })
