@@ -55,6 +55,14 @@ DomainErrorTranslator._directories = {
   ),
   'POST_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
     'tidak dapat membuat comment baru karena tipe data tidak sesuai'
+  ),
+
+  // Error for PostReplies
+  'POST_REPLIES.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError(
+    'tidak dapat membuat replies baru karena properti yang dibutuhkan tidak ada'
+  ),
+  'POST_REPLIES.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
+    'tidak dapat membuat replies baru karena tipe data tidak sesuai'
   )
 }
 

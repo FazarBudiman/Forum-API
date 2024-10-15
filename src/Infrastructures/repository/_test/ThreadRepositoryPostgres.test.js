@@ -138,7 +138,7 @@ describe('ThreadRepositoryPostgres', () => {
         id: 'thread-12345',
         title: 'Ngopi',
         body: 'Infokan ngopi sekitaran Bandung',
-        createdAt: date,
+        date: date,
         owner: 'user-123'
       })
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {})
@@ -170,7 +170,7 @@ describe('ThreadRepositoryPostgres', () => {
         id: 'thread-12345',
         title: 'Ngopi',
         body: 'Infokan ngopi sekitaran Bandung',
-        createdAt: date,
+        date: date,
         owner: 'user-123'
       })
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {})

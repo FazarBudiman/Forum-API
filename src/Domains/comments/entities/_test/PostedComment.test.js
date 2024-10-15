@@ -12,7 +12,7 @@ describe('a PostedComment entities', () => {
       'POSTED_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY'
     )
   })
-  it('should create PostedComment object correctly', () => {
+  it('should create PostedComment did not meet data type specification', () => {
     // Arrange
     const payload = {
       id: 123,
