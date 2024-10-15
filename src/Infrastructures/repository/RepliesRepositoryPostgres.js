@@ -1,3 +1,5 @@
+const AuthorizationError = require("../../Commons/exceptions/AuthorizationError");
+const NotFoundError = require("../../Commons/exceptions/NotFoundError");
 const PostedReplies = require("../../Domains/replies/entities/PostedReplies");
 const RepliesRepository = require("../../Domains/replies/RepliesRepository");
 
@@ -14,7 +16,27 @@ class RepliesRepositoryPostgres extends RepliesRepository {
         const query = `INSERT INTO replies VALUES('${id}', '${content}','${owner}', 'FALSE', NOW(), '${threadsId}', '${commentsId}') RETURNING id, content, owner`
         const result = await this._pool.query(query)
         return new PostedReplies({...result.rows[0]})
+    }
 
+    async checkRepliesIsExist (replyId){
+        const query = `SELECT * FROM replies WHERE id = '${replyId}'`
+        const result = await this._pool.query(query)
+        if (result.rowCount === 0) {
+          throw new NotFoundError('Replies tidak ada')
+        }
+    }
+
+    async checkRepliesOwner(replyId, replyOwnerId){
+        const query = `SELECT * FROM replies WHERE id = '${replyId}' AND owner = '${replyOwnerId}'`
+        const result = await this._pool.query(query)
+        if (result.rowCount === 0) {
+            throw new AuthorizationError('Replies tidak bisa dihapus, sebab bukan pemilik')
+        }
+    }
+
+    async deleteReplies(replyId){
+        const query = `UPDATE replies SET is_delete = TRUE WHERE id = '${replyId}'`
+        await this._pool.query(query)
     }
 }
 

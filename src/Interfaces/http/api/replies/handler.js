@@ -1,11 +1,11 @@
 const RepliesAddUseCase = require("../../../../Applications/use_case/RepliesAddUseCase")
+const RepliesDeleteuseCase = require("../../../../Applications/use_case/RepliesDeleteUseCase")
 
 class RepliesHandler {
     constructor(container){
         this._container = container
         this.postRepliesHandler = this.postRepliesHandler.bind(this)
-
-
+        this.deleteRepliesHandler = this.deleteRepliesHandler.bind(this)
     }
 
     async postRepliesHandler (request, h){
@@ -31,6 +31,29 @@ class RepliesHandler {
           })
           response.code(201)
           return response
+    }
+
+    async deleteRepliesHandler(request, h){
+        const repliesDeleteUseCase = this._container.getInstance(
+            RepliesDeleteuseCase.name
+        )
+
+        const {id: owner} = request.auth.credentials
+        const { threadId, commentId, replyId } = request.params
+        const payload = {
+            ...request.payload,
+            owner,
+            threadId,
+            commentId,
+            replyId
+        }
+        await repliesDeleteUseCase.execute(payload)
+        const response = h.response({
+            status: 'success',
+          })
+          response.code(200)
+          return response
+
     }
 }
 
