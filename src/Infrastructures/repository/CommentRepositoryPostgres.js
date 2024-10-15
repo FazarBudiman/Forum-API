@@ -43,11 +43,11 @@ class CommentRepositoryPostgres extends CommentRepository {
 
   async getCommentInThread(threadId) {
     const query = `
-            SELECT c.id, u.username ,'c.createdAt' AS date, c."content", c.is_delete FROM comments c  
-                right join threads t on c.threads_id = t.id 
-                right join users u on c."owner" = u.id 
+            SELECT c.id, u.username, c.date, c."content", c.is_delete FROM comments c  
+                RIGHT JOIN threads t ON c.threads_id = t.id 
+                RIGHT JOIN users u ON c."owner" = u.id 
                 WHERE t.id  = '${threadId}' 
-                order by c."createdAt" ASC
+                ORDER BY c.date ASC
         `
     const result = await this._pool.query(query)
     return result.rows

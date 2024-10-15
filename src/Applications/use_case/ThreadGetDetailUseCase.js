@@ -6,14 +6,13 @@ class ThreadGetDetailUseCase {
 
   async execute(useCasePayload) {
     const { threadId } = useCasePayload
-
-    let comments = await this._commentRepository.getCommentInThread(threadId)
-    // comments.forEach((comment) => {
-    //   if (comment.is_delete) {
-    //     comment.content = '**komentar telah dihapus**'
-    //   }
-    // })
-    const thread = await this._threadRepository.checkThreadIsExist(threadId)
+    const comments = await this._commentRepository.getCommentInThread(threadId)
+    comments.forEach((comment) => {
+      if (comment.is_delete) {
+        return comment.content = '**komentar telah dihapus**'
+      }
+    })
+    const thread = await this._threadRepository.getDetailThread(threadId)
     return {
       ...thread,
       comments

@@ -6,9 +6,9 @@ const ThreadsTableTestHelper = {
     title = 'Senin',
     body = 'Hari ini adalah hari senin',
     owner,
-    createdAt = '2024-11-12'
+    date = '2024-11-12'
   }) {
-    const query = `INSERT INTO threads VALUES ('${id}', '${title}', '${body}', '${owner}', '${createdAt}')`
+    const query = `INSERT INTO threads VALUES ('${id}', '${title}', '${body}', '${owner}', '${date}')`
     await pool.query(query)
   },
 

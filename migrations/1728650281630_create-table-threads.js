@@ -20,8 +20,8 @@ exports.up = (pgm) => {
       type: 'VARCHAR(50)',
       notNull: true
     },
-    createdAt: {
-      type: 'TIMESTAMP',
+    date: {
+      type: 'VARCHAR(50)',
       notNull: true
     }
   })

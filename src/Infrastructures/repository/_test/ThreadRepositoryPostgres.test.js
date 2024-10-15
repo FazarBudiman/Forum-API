@@ -119,9 +119,66 @@ describe('ThreadRepositoryPostgres', () => {
 
       // Action and Assert
       await expect(threadRepositoryPostgres.checkThreadIsExist('thread-12345')).resolves.not.toThrowError(NotFoundError)
-      const result =  await threadRepositoryPostgres.checkThreadIsExist('thread-12345')
-      expect(result.id).toEqual('thread-12345')
-      expect(result.username).toEqual('dicoding')
     })
   })
+
+  describe('getDetailThread function', () => { 
+    it('should return data thread  if thread exist ', async () => {
+      // Arrange
+      // Add User
+      await UsersTableTestHelper.addUser({
+        id: 'user-123',
+        username: 'dicoding',
+        password: 'secret',
+        fullname: 'Dicoding Indonesia'
+      })
+      // Add Thread
+      const date = new Date().toISOString()
+      await ThreadsTableTestHelper.addThread({
+        id: 'thread-12345',
+        title: 'Ngopi',
+        body: 'Infokan ngopi sekitaran Bandung',
+        createdAt: date,
+        owner: 'user-123'
+      })
+      const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {})
+
+      // Action
+      const result = await threadRepositoryPostgres.getDetailThread('thread-12345')
+
+      // Assert
+      expect(result).toEqual({
+        id: 'thread-12345',
+        title: 'Ngopi',
+        body: 'Infokan ngopi sekitaran Bandung',
+        date: date,
+        username: 'dicoding'
+      })
+    })
+    it('should return array empty if data thread not exist', async () => {
+      // Arrange
+      // Add User
+      await UsersTableTestHelper.addUser({
+        id: 'user-123',
+        username: 'dicoding',
+        password: 'secret',
+        fullname: 'Dicoding Indonesia'
+      })
+      // Add Thread
+      const date = new Date().toISOString()
+      await ThreadsTableTestHelper.addThread({
+        id: 'thread-12345',
+        title: 'Ngopi',
+        body: 'Infokan ngopi sekitaran Bandung',
+        createdAt: date,
+        owner: 'user-123'
+      })
+      const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {})
+
+      // Action
+      const result = await threadRepositoryPostgres.getDetailThread('xxx')
+      // Assert
+      expect(result).toEqual(undefined)
+    })
+   })
 })
