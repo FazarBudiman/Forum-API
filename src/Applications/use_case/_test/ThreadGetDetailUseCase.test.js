@@ -21,6 +21,13 @@ describe('ThreadGetDetailUseCase', () => {
         date: '2024-10-15T01:58:30.051Z',
         content: 'sebuah reply',
         is_delete: false
+      },
+      {
+        id: 'reply-456',
+        username: 'johndoe',
+        date: '2024-10-14T01:58:30.051Z',
+        content: 'sebuah reply',
+        is_delete: true
       }
     ]
 
@@ -69,7 +76,6 @@ describe('ThreadGetDetailUseCase', () => {
 
     // Action
     const result = await threadGetDetailUseCase.execute(useCasePayload)
-    console.log(result)
 
     // Assert
     expect(mockCommentRepository.getCommentInThread).toBeCalledWith(
@@ -99,7 +105,13 @@ describe('ThreadGetDetailUseCase', () => {
               id: 'reply-123',
               username: 'johndoe',
               date: '2024-10-15T01:58:30.051Z',
-              content: 'sebuah reply'
+              content: 'sebuah reply',
+            },
+            {
+              id: 'reply-456',
+              username: 'johndoe',
+              date: '2024-10-14T01:58:30.051Z',
+              content: '**balasan telah dihapus**',
             }
           ]
         },
@@ -113,7 +125,13 @@ describe('ThreadGetDetailUseCase', () => {
               id: 'reply-123',
               username: 'johndoe',
               date: '2024-10-15T01:58:30.051Z',
-              content: 'sebuah reply'
+              content: 'sebuah reply',
+            },
+            {
+              id: 'reply-456',
+              username: 'johndoe',
+              date: '2024-10-14T01:58:30.051Z',
+              content: '**balasan telah dihapus**',
             }
           ]
         }

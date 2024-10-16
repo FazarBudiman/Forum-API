@@ -202,6 +202,7 @@ describe('CommentRepositoryPostgres', () => {
       ).rejects.toThrowError(AuthorizationError)
     })
   })
+
   describe('deleteComment function', () => {
     it('should comment deleted', async () => {
       // Arrange
@@ -234,8 +235,9 @@ describe('CommentRepositoryPostgres', () => {
       expect(result[0].is_delete).toStrictEqual(true)
     })
   })
+
   describe('getCommentInThread function', () => {
-    it('should comment in thread is exist', async () => {
+    it('should return comment in thread if comment exist', async () => {
       // Arrange
       // Add User
       await UsersTableTestHelper.addUser({
@@ -250,10 +252,14 @@ describe('CommentRepositoryPostgres', () => {
         owner: 'user-123'
       })
 
+      const date = new Date().toISOString()
       await CommentsTableTestHelper.addComment({
         id: 'comment-123',
         owner: 'user-123',
-        threadsId: 'thread-12345'
+        threadsId: 'thread-12345',
+        date: date,
+        isDelete: false,
+        content: 'P Balap'
       })
       const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {})
 
@@ -262,11 +268,40 @@ describe('CommentRepositoryPostgres', () => {
         await commentRepositoryPostgres.getCommentInThread('thread-12345')
 
       // Assert
-      expect(result[0].id).toEqual('comment-123')
-      expect(result[0].username).toEqual('dicoding')
-      expect(result[0].is_delete).toEqual(false)
+      expect(result).toHaveLength(1)
+      expect(result[0]).toStrictEqual({
+        id: 'comment-123',
+        username: 'dicoding',
+        date: date,
+        content: 'P Balap',
+        is_delete: false
+      })
     }),
-      it('should comment in thread is exist even comment is_delete', async () => {
+    it('should return array empty  if comment in thread not exist', async () => {
+      // Arrange
+      // Add User
+      await UsersTableTestHelper.addUser({
+        id: 'user-123',
+        username: 'dicoding',
+        password: 'secret',
+        fullname: 'Dicoding Indonesia'
+      })
+      // Add Thread
+      await ThreadsTableTestHelper.addThread({
+        id: 'thread-12345',
+        owner: 'user-123'
+      })
+
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {})
+
+      // Action
+      const result =
+        await commentRepositoryPostgres.getCommentInThread('thread-12345')
+
+      // Assert
+      expect(result).toHaveLength(0)
+    }),
+    it('should comment in thread is exist even comment is_delete', async () => {
         // Arrange
         // Add User
         await UsersTableTestHelper.addUser({
@@ -281,10 +316,13 @@ describe('CommentRepositoryPostgres', () => {
           owner: 'user-123'
         })
 
+        const date = new Date().toISOString()
         await CommentsTableTestHelper.addComment({
           id: 'comment-123',
           owner: 'user-123',
-          threadsId: 'thread-12345'
+          threadsId: 'thread-12345',
+          date: date,
+          content: 'Gasss'
         })
         const commentRepositoryPostgres = new CommentRepositoryPostgres(
           pool,
@@ -297,9 +335,14 @@ describe('CommentRepositoryPostgres', () => {
           await commentRepositoryPostgres.getCommentInThread('thread-12345')
 
         // Assert
-        expect(result[0].id).toEqual('comment-123')
-        expect(result[0].username).toEqual('dicoding')
-        expect(result[0].is_delete).toEqual(true)
-      })
+        expect(result).toHaveLength(1)
+        expect(result[0]).toStrictEqual({
+          id: 'comment-123',
+          username: 'dicoding',
+          date: date,
+          content: 'Gasss',
+          is_delete: true
+        })
+    })
   })
 })

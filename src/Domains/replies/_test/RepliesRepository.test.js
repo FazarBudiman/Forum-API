@@ -18,5 +18,8 @@ describe('RepliesRepository', () => {
     await expect(repliesRepository.checkRepliesOwner({})).rejects.toThrowError(
       'REPLIES_REPOSITORY.METHOD_NOT_IMPLEMENTED'
     )
+    await expect(repliesRepository.getRepliesInComment({})).rejects.toThrowError(
+      'REPLIES_REPOSITORY.METHOD_NOT_IMPLEMENTED'
+    )
   })
 })
