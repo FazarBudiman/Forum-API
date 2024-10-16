@@ -17,7 +17,7 @@ class CommentHandler {
     const payload = await {
       ...request.payload,
       owner,
-      threadsId,
+      threadsId
     }
     const addedComment = await commentAddUseCase.execute(payload)
     const response = h.response({

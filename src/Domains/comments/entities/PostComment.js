@@ -2,14 +2,14 @@ class PostComment {
   constructor(payload) {
     this._verifyPayload(payload)
 
-    const { content, owner, threadsId} = payload
+    const { content, owner, threadsId } = payload
 
     this.content = content
     this.owner = owner
     this.threadsId = threadsId
   }
 
-  _verifyPayload({ content, owner, threadsId}) {
+  _verifyPayload({ content, owner, threadsId }) {
     if (!content || !owner || !threadsId) {
       throw new Error('POST_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY')
     }

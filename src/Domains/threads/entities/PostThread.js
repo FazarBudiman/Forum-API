@@ -10,7 +10,7 @@ class PostThread {
   }
 
   _verifyPayload({ title, body, owner }) {
-    if (!title || !body || !owner ) {
+    if (!title || !body || !owner) {
       throw new Error('POST_THREAD.NOT_CONTAIN_NEEDED_PROPERTY')
     }
 

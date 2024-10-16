@@ -9,7 +9,7 @@ describe('ThreadAddUseCase', () => {
     const useCasePayload = {
       title: 'Senin',
       body: 'Hari ini adalah hari senin',
-      owner: 'user-123',
+      owner: 'user-123'
     }
 
     const mockPostedThread = new PostedThread({

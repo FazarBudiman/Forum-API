@@ -5,7 +5,7 @@ describe('a PostComment entities', () => {
     // Arrange
     const payload = {
       content: 'P Balap',
-      owner: 'user-dada',
+      owner: 'user-dada'
     }
 
     // Action and Assert
@@ -19,7 +19,7 @@ describe('a PostComment entities', () => {
     const payload = {
       content: 123,
       owner: 'user-dada',
-      threadsId: 'thread-12121',
+      threadsId: 'thread-12121'
     }
 
     // Action and Assert
@@ -32,11 +32,11 @@ describe('a PostComment entities', () => {
     const payload = {
       content: 'P Balap',
       owner: 'user-1231',
-      threadsId: 'thread-456',
+      threadsId: 'thread-456'
     }
 
     // Action
-    const { content, owner, threadsId} = new PostComment(payload)
+    const { content, owner, threadsId } = new PostComment(payload)
 
     // Assert
     expect(content).toEqual(payload.content)

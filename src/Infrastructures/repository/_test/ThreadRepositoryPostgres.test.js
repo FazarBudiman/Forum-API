@@ -118,11 +118,13 @@ describe('ThreadRepositoryPostgres', () => {
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {})
 
       // Action and Assert
-      await expect(threadRepositoryPostgres.checkThreadIsExist('thread-12345')).resolves.not.toThrowError(NotFoundError)
+      await expect(
+        threadRepositoryPostgres.checkThreadIsExist('thread-12345')
+      ).resolves.not.toThrowError(NotFoundError)
     })
   })
 
-  describe('getDetailThread function', () => { 
+  describe('getDetailThread function', () => {
     it('should return data thread  if thread exist ', async () => {
       // Arrange
       // Add User
@@ -144,7 +146,8 @@ describe('ThreadRepositoryPostgres', () => {
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {})
 
       // Action
-      const result = await threadRepositoryPostgres.getDetailThread('thread-12345')
+      const result =
+        await threadRepositoryPostgres.getDetailThread('thread-12345')
 
       // Assert
       expect(result).toEqual({
@@ -180,5 +183,5 @@ describe('ThreadRepositoryPostgres', () => {
       // Assert
       expect(result).toEqual(undefined)
     })
-   })
+  })
 })

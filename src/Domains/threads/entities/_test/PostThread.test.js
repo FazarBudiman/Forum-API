@@ -18,7 +18,7 @@ describe('a PostThread entities', () => {
     const payload = {
       title: 123,
       body: 'adaad',
-      owner: 2331,
+      owner: 2331
     }
 
     // Action and Assert
@@ -31,11 +31,11 @@ describe('a PostThread entities', () => {
     const payload = {
       title: 'Senin',
       body: 'Hari ini hari senin',
-      owner: 'user-12131',
+      owner: 'user-12131'
     }
 
     // Action
-    const { title, body, owner} = new PostThread(payload)
+    const { title, body, owner } = new PostThread(payload)
 
     // Assert
     expect(title).toEqual(payload.title)

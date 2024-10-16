@@ -10,7 +10,7 @@ describe('CommentAddUseCase', () => {
     const useCasePayload = {
       content: 'P Balap',
       owner: 'user-1231',
-      threadsId: 'thread-456',
+      threadsId: 'thread-456'
     }
 
     const mockPostedComment = new PostedComment({
@@ -46,12 +46,14 @@ describe('CommentAddUseCase', () => {
       })
     )
 
-    expect(mockThreadRepository.checkThreadIsExist).toBeCalledWith(useCasePayload.threadsId)
+    expect(mockThreadRepository.checkThreadIsExist).toBeCalledWith(
+      useCasePayload.threadsId
+    )
     expect(mockCommentRepository.addComment).toBeCalledWith(
       new PostComment({
         content: useCasePayload.content,
         owner: useCasePayload.owner,
-        threadsId: useCasePayload.threadsId,
+        threadsId: useCasePayload.threadsId
       })
     )
   })

@@ -13,7 +13,7 @@ class ThreadsHandler {
     const { id: owner } = request.auth.credentials
     const payload = {
       ...request.payload,
-      owner,
+      owner
     }
     const addedThread = await threadAddUseCase.execute(payload)
     const response = h.response({
