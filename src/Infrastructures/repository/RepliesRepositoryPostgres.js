@@ -13,7 +13,10 @@ class RepliesRepositoryPostgres extends RepliesRepository {
   async addReplies(postReplies) {
     const { content, owner, threadsId, commentsId } = postReplies
     const id = `reply-${this._idGenerator()}`
-    const query = `INSERT INTO replies VALUES('${id}', '${content}','${owner}', 'FALSE', NOW(), '${threadsId}', '${commentsId}') RETURNING id, content, owner`
+    const query = {
+      text: 'INSERT INTO replies(id, content, owner, threads_id, comments_id) VALUES($1, $2, $3, $4, $5) RETURNING id, content, owner',
+      values: [id, content, owner, threadsId, commentsId]
+    }
     const result = await this._pool.query(query)
     return new PostedReplies({ ...result.rows[0] })
   }

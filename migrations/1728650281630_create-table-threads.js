@@ -1,7 +1,3 @@
-/* eslint-disable camelcase */
-
-exports.shorthands = undefined
-
 exports.up = (pgm) => {
   pgm.createTable('threads', {
     id: {
@@ -22,7 +18,8 @@ exports.up = (pgm) => {
     },
     date: {
       type: 'VARCHAR(50)',
-      notNull: true
+      notNull: true,
+      default: pgm.func('current_timestamp')
     }
   })
 

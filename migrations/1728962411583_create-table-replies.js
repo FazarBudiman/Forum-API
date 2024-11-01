@@ -1,7 +1,3 @@
-/* eslint-disable camelcase */
-
-exports.shorthands = undefined
-
 exports.up = (pgm) => {
   pgm.createTable('replies', {
     id: {
@@ -18,11 +14,13 @@ exports.up = (pgm) => {
     },
     is_delete: {
       type: 'BOOLEAN',
-      notNull: true
+      notNull: true,
+      default: pgm.func(false),
     },
     date: {
       type: 'VARCHAR(50)',
-      notNull: true
+      notNull: true,
+      default: pgm.func('current_timestamp')
     },
     threads_id: {
       type: 'VARCHAR(50)',

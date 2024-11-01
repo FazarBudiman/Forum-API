@@ -13,7 +13,10 @@ class CommentRepositoryPostgres extends CommentRepository {
   async addComment(postComment) {
     const { content, owner, threadsId } = postComment
     const id = `comment-${this._idGenerator()}`
-    const query = `INSERT INTO comments VALUES ('${id}', '${content}', '${owner}', '${threadsId}', FALSE, NOW()) RETURNING id, content, owner`
+    const query = {
+      text: 'INSERT INTO comments(id, content, owner, threads_id) VALUES ($1, $2, $3, $4) RETURNING id, content, owner',
+      values: [id, content, owner, threadsId]
+    } 
     const result = await this._pool.query(query)
     return new PostedComment({ ...result.rows[0] })
   }
