@@ -22,7 +22,10 @@ class RepliesRepositoryPostgres extends RepliesRepository {
   }
 
   async checkRepliesIsExist(replyId) {
-    const query = `SELECT * FROM replies WHERE id = '${replyId}'`
+    const query = {
+      text: 'SELECT * FROM replies WHERE id = $1',
+      values: [replyId]
+    }
     const result = await this._pool.query(query)
     if (result.rowCount === 0) {
       throw new NotFoundError('Replies tidak ada')
@@ -30,7 +33,10 @@ class RepliesRepositoryPostgres extends RepliesRepository {
   }
 
   async checkRepliesOwner(replyId, replyOwnerId) {
-    const query = `SELECT * FROM replies WHERE id = '${replyId}' AND owner = '${replyOwnerId}'`
+    const query = {
+      text: 'SELECT * FROM replies WHERE id = $1 AND owner = $2',
+      values: [replyId, replyOwnerId]
+    } 
     const result = await this._pool.query(query)
     if (result.rowCount === 0) {
       throw new AuthorizationError(
@@ -40,16 +46,21 @@ class RepliesRepositoryPostgres extends RepliesRepository {
   }
 
   async deleteReplies(replyId) {
-    const query = `UPDATE replies SET is_delete = TRUE WHERE id = '${replyId}'`
+    const query = {
+      text: 'UPDATE replies SET is_delete = TRUE WHERE id = $1',
+      values: [replyId]
+    } 
     await this._pool.query(query)
   }
 
   async getRepliesInComment(commentId) {
-    const query = `SELECT r.id, u.username, r.date, r."content", r.is_delete FROM replies r
-				INNER join comments c on r.comments_id = c.id
-                INNER JOIN users u ON r."owner" = u.id 
-                WHERE c.id  = '${commentId}'
-                ORDER BY r.date asc`
+    const query = {
+      text:`SELECT r.id, u.username, r.date, r."content", r.is_delete FROM replies r
+              INNER join comments c on r.comments_id = c.id
+              INNER JOIN users u ON r."owner" = u.id 
+              WHERE c.id  = $1 ORDER BY r.date asc`,
+      values: [commentId]
+    } 
 
     const result = await this._pool.query(query)
     return result.rows

@@ -1,4 +1,4 @@
-const PostReplies = require('../../Domains/replies/entities/PostReplies')
+const PostReplies = require('../../../Domains/replies/entities/PostReplies')
 
 class RepliesAddUseCase {
   constructor({ repliesRepository, commentRepository, threadRepository }) {

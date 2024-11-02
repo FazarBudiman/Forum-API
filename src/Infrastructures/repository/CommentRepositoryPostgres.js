@@ -22,7 +22,10 @@ class CommentRepositoryPostgres extends CommentRepository {
   }
 
   async checkCommentIsExist(commentId) {
-    const query = `SELECT * FROM comments WHERE id = '${commentId}'`
+    const query = {
+      text: 'SELECT * FROM comments WHERE id = $1',
+      values: [commentId]
+    } 
     const result = await this._pool.query(query)
     if (result.rowCount === 0) {
       throw new NotFoundError('Comment tidak ada')
@@ -30,7 +33,10 @@ class CommentRepositoryPostgres extends CommentRepository {
   }
 
   async checkCommentOwner(commentId, commentOwnerId) {
-    const query = `SELECT * FROM comments WHERE id = '${commentId}' AND owner = '${commentOwnerId}'`
+    const query = {
+      text: 'SELECT * FROM comments WHERE id = $1 AND owner = $2',
+      values: [commentId, commentOwnerId]
+    }
     const result = await this._pool.query(query)
     if (result.rowCount === 0) {
       throw new AuthorizationError(
@@ -40,18 +46,22 @@ class CommentRepositoryPostgres extends CommentRepository {
   }
 
   async deleteComment(commentId) {
-    const query = `UPDATE comments SET is_delete = true WHERE id = '${commentId}'`
+    const query = {
+      text: 'UPDATE comments SET is_delete = true WHERE id = $1',
+      values: [commentId]
+    }
     await this._pool.query(query)
   }
 
   async getCommentInThread(threadId) {
-    const query = `
-            SELECT c.id, u.username, c.date, c."content", c.is_delete FROM comments c  
+    const query = {
+      text: `SELECT c.id, u.username, c.date, c."content", c.is_delete FROM comments c  
                 RIGHT JOIN threads t ON c.threads_id = t.id 
                 RIGHT JOIN users u ON c."owner" = u.id 
-                WHERE t.id  = '${threadId}' 
-                ORDER BY c.date ASC
-        `
+                WHERE t.id  = $1 
+                ORDER BY c.date ASC`,
+      values: [threadId]
+    }
     const result = await this._pool.query(query)
     return result.rows
   }

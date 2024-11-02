@@ -1,4 +1,4 @@
-const PostComment = require('../../Domains/comments/entities/PostComment')
+const PostComment = require('../../../Domains/comments/entities/PostComment')
 
 class CommentAddUseCase {
   constructor({ commentRepository, threadRepository }) {

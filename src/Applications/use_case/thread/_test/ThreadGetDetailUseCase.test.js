@@ -1,7 +1,7 @@
-const ThreadRepository = require('../../../Domains/threads/ThreadRepository')
-const CommentRepository = require('../../../Domains/comments/CommentRepository')
+const ThreadRepository = require('../../../../Domains/threads/ThreadRepository')
+const CommentRepository = require('../../../../Domains/comments/CommentRepository')
 const ThreadGetDetailUseCase = require('../ThreadGetDetailUseCase')
-const RepliesRepository = require('../../../Domains/replies/RepliesRepository')
+const RepliesRepository = require('../../../../Domains/replies/RepliesRepository')
 
 describe('ThreadGetDetailUseCase', () => {
   it('should orchestrating the get detail action correctly', async () => {

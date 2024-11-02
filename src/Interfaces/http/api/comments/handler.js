@@ -1,5 +1,5 @@
-const CommentAddUseCase = require('../../../../Applications/use_case/CommentAddUseCase')
-const CommentDeleteUseCase = require('../../../../Applications/use_case/CommentDeleteUseCase')
+const CommentAddUseCase = require('../../../../Applications/use_case/comment/CommentAddUseCase')
+const CommentDeleteUseCase = require('../../../../Applications/use_case/comment/CommentDeleteUseCase')
 
 class CommentHandler {
   constructor(container) {

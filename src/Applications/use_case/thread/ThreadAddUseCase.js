@@ -1,4 +1,4 @@
-const PostThread = require('../../Domains/threads/entities/PostThread')
+const PostThread = require('../../../Domains/threads/entities/PostThread')
 
 class ThreadUseCaseAdd {
   constructor({ threadRepository }) {

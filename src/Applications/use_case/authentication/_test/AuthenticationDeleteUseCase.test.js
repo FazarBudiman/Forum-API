@@ -1,15 +1,15 @@
-const AuthenticationRepository = require('../../../Domains/authentications/AuthenticationRepository')
-const UserLogoutUseCase = require('../UserLogoutUseCase')
+const AuthenticationRepository = require('../../../../Domains/authentications/AuthenticationRepository')
+const AuthenticationDeleteUseCase = require('../AuthenticationDeleteUseCase')
 
-describe('UserLogoutUseCase', () => {
+describe('AuthenticationDeleteUseCase', () => {
   it('should throw error if use case payload not contain refresh token', async () => {
     // Arrange
     const useCasePayload = {}
-    const userLogoutUseCase = new UserLogoutUseCase({})
+    const authenticationDeleteUseCase = new AuthenticationDeleteUseCase({})
 
     // Action & Assert
     await expect(
-      userLogoutUseCase.execute(useCasePayload)
+      authenticationDeleteUseCase.execute(useCasePayload)
     ).rejects.toThrowError(
       'DELETE_AUTHENTICATION_USE_CASE.NOT_CONTAIN_REFRESH_TOKEN'
     )
@@ -20,11 +20,11 @@ describe('UserLogoutUseCase', () => {
     const useCasePayload = {
       refreshToken: 123
     }
-    const userLogoutUseCase = new UserLogoutUseCase({})
+    const authenticationDeleteUseCase = new AuthenticationDeleteUseCase({})
 
     // Action & Assert
     await expect(
-      userLogoutUseCase.execute(useCasePayload)
+      authenticationDeleteUseCase.execute(useCasePayload)
     ).rejects.toThrowError(
       'DELETE_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION'
     )
@@ -43,12 +43,12 @@ describe('UserLogoutUseCase', () => {
       .fn()
       .mockImplementation(() => Promise.resolve())
 
-    const userLogoutUseCase = new UserLogoutUseCase({
+    const authenticationDeleteUseCase = new AuthenticationDeleteUseCase({
       authenticationRepository: mockAuthenticationRepository
     })
 
-    // Act
-    await userLogoutUseCase.execute(useCasePayload)
+    // Action
+    await authenticationDeleteUseCase.execute(useCasePayload)
 
     // Assert
     expect(

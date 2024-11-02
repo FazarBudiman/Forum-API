@@ -1,6 +1,6 @@
-const PostedThread = require('../../../Domains/threads/entities/PostedThread')
-const PostThread = require('../../../Domains/threads/entities/PostThread')
-const ThreadRepository = require('../../../Domains/threads/ThreadRepository')
+const PostedThread = require('../../../../Domains/threads/entities/PostedThread')
+const PostThread = require('../../../../Domains/threads/entities/PostThread')
+const ThreadRepository = require('../../../../Domains/threads/ThreadRepository')
 const ThreadAddUseCase = require('../ThreadAddUseCase')
 
 describe('ThreadAddUseCase', () => {

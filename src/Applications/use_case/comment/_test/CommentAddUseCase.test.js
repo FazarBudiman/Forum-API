@@ -1,8 +1,8 @@
-const PostedComment = require('../../../Domains/comments/entities/PostedComment')
-const PostComment = require('../../../Domains/comments/entities/PostComment')
+const PostedComment = require('../../../../Domains/comments/entities/PostedComment')
+const PostComment = require('../../../../Domains/comments/entities/PostComment')
 const CommentAddUseCase = require('../CommentAddUseCase')
-const CommentRepository = require('../../../Domains/comments/CommentRepository')
-const ThreadRepository = require('../../../Domains/threads/ThreadRepository')
+const CommentRepository = require('../../../../Domains/comments/CommentRepository')
+const ThreadRepository = require('../../../../Domains/threads/ThreadRepository')
 
 describe('CommentAddUseCase', () => {
   it('should orchestrating the add comment action correctly', async () => {

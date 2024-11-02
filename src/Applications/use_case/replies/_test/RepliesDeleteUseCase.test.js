@@ -1,6 +1,6 @@
-const CommentRepository = require('../../../Domains/comments/CommentRepository')
-const RepliesRepository = require('../../../Domains/replies/RepliesRepository')
-const ThreadRepository = require('../../../Domains/threads/ThreadRepository')
+const CommentRepository = require('../../../../Domains/comments/CommentRepository')
+const RepliesRepository = require('../../../../Domains/replies/RepliesRepository')
+const ThreadRepository = require('../../../../Domains/threads/ThreadRepository')
 const RepliesDeleteUseCase = require('../RepliesDeleteUseCase')
 
 describe('RepliesDeleteUseCase', () => {
