@@ -8,7 +8,8 @@ describe('LikeCommentUseCase', () => {
         // Arrange
         const useCasePayload = {
             threadId: 'thread-12345',
-            commentId: 'comment-5677'
+            commentId: 'comment-5677',
+            userId: 'user-999'
         }
         const mockThreadRepository = new ThreadRepository()
         const mockCommentRepository = new CommentRepository()
@@ -31,15 +32,16 @@ describe('LikeCommentUseCase', () => {
         // Assert
         expect(mockThreadRepository.checkThreadIsExist).toHaveBeenCalledWith(useCasePayload.threadId)
         expect(mockCommentRepository.checkCommentIsExist).toHaveBeenCalledWith(useCasePayload.commentId)
-        expect(mockLikesCommentRepository.checkCommentIsLiked).toHaveBeenCalledWith(useCasePayload)
-        expect(mockLikesCommentRepository.likeComment).toHaveBeenCalledWith(useCasePayload)
+        expect(mockLikesCommentRepository.checkCommentIsLiked).toHaveBeenCalledWith(useCasePayload.commentId, useCasePayload.userId)
+        expect(mockLikesCommentRepository.likeComment).toHaveBeenCalledWith(useCasePayload.commentId, useCasePayload.userId)
     })
 
     it('should orchestrating the unlike comment action correctly', async () => {
         // Arrange
         const useCasePayload = {
             threadId: 'thread-12345',
-            commentId: 'comment-5677'
+            commentId: 'comment-5677',
+            userId: 'user-999'
         }
         const mockThreadRepository = new ThreadRepository()
         const mockCommentRepository = new CommentRepository()
@@ -62,7 +64,7 @@ describe('LikeCommentUseCase', () => {
         // Assert
         expect(mockThreadRepository.checkThreadIsExist).toHaveBeenCalledWith(useCasePayload.threadId)
         expect(mockCommentRepository.checkCommentIsExist).toHaveBeenCalledWith(useCasePayload.commentId)
-        expect(mockLikesCommentRepository.checkCommentIsLiked).toHaveBeenCalledWith(useCasePayload)
-        expect(mockLikesCommentRepository.unlikeComment).toHaveBeenCalledWith(useCasePayload)
+        expect(mockLikesCommentRepository.checkCommentIsLiked).toHaveBeenCalledWith(useCasePayload.commentId, useCasePayload.userId)
+        expect(mockLikesCommentRepository.unlikeComment).toHaveBeenCalledWith(useCasePayload.commentId, useCasePayload.userId)
     })
 })
