@@ -80,7 +80,8 @@ describe('/threads/{threadId}/comments', () => {
       expect(responseJson.status).toEqual('success')
       expect(responseJson.data.addedComment).toBeDefined()
     }),
-      it('should response 400 and if bad payload', async () => {
+    
+    it('should response 400 and if bad payload', async () => {
         // Arrange
         const server = await createServer(container)
 
@@ -140,7 +141,7 @@ describe('/threads/{threadId}/comments', () => {
         const responseJson = JSON.parse(response.payload)
         expect(response.statusCode).toEqual(400)
         expect(responseJson.status).toEqual('fail')
-      })
+    })
 
     it('should response 401 and if not token authorization', async () => {
       // Arrange
@@ -260,6 +261,7 @@ describe('/threads/{threadId}/comments', () => {
       expect(responseJson.status).toEqual('fail')
     })
   })
+
   describe('when DELETE /threads/{threadId}/comments/{commentId}', () => {
     it('should response 200 and comment deleted', async () => {
       // Arrange
