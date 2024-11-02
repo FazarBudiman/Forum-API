@@ -19,19 +19,19 @@ exports.up = pgm => {
     })
 
     pgm.addConstraint(
-        'like_in_comment',
-        'fk_like-in-comment.owner_users.id',
+        'likes_in_comment',
+        'fk_likes-in-comment.owner_users.id',
         'FOREIGN KEY (owner) REFERENCES users(id) ON DELETE CASCADE'
     )
     pgm.addConstraint(
-        'like_in_comment',
-        'fk_like-in-comment.commentsId_comments.id',
+        'likes_in_comment',
+        'fk_likes-in-comment.commentsId_comments.id',
         'FOREIGN KEY (comments_id) REFERENCES comments(id) ON DELETE CASCADE'
     )
 };
 
 exports.down = pgm => {
-    pgm.addConstraint('like_in_comment', 'fk_like-in-comment.owner_users.id')
-    pgm.addConstraint('like_in_comment','fk_like-in-comment.commentsId_comments.id')
-    pgm.dropTable('like_in_comment')
+    pgm.addConstraint('likes_in_comment', 'fk_likes-in-comment.owner_users.id')
+    pgm.addConstraint('likes_in_comment','fk_likes-in-comment.commentsId_comments.id')
+    pgm.dropTable('likes_in_comment')
 };
