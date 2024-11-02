@@ -27,13 +27,13 @@ const LikesCommentTableTestHelper = {
         await pool.query(query)
     },
 
-    async unlikeComment(id){
-        const query = {
-            text: 'UPDATE likes_in_comment SET is_delete = false WHERE id = $1',
-            values:[id]
-        }
-        await pool.query(query)
-    },
+    // async unlikeComment(id){
+    //     const query = {
+    //         text: 'UPDATE likes_in_comment SET is_delete = false WHERE id = $1',
+    //         values:[id]
+    //     }
+    //     await pool.query(query)
+    // },
     
     async cleanTable() {
         await pool.query(`DELETE FROM comments WHERE 1=1`)

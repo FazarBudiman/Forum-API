@@ -3,9 +3,9 @@ const LikesCommentTableTestHelper = require("../../../../tests/LikesCommentTable
 const ThreadsTableTestHelper = require("../../../../tests/ThreadsTableTestHelper")
 const UsersTableTestHelper = require("../../../../tests/UsersTableTestHelper")
 const pool = require("../../database/postgres/pool")
-const LikeCommentRepositoryPostgres = require('../LikeCommentRepositoryPostgres')
+const LikesCommentRepositoryPostgres = require('../LikesCommentRepositoryPostgres')
 
-describe('LikeCommentRepositoryPostgres', () => {
+describe('LikesCommentRepositoryPostgres', () => {
     afterEach(async () => {
         await CommentsTableTestHelper.cleanTable()
         await ThreadsTableTestHelper.cleanTable()
@@ -42,10 +42,10 @@ describe('LikeCommentRepositoryPostgres', () => {
 
             // Arrange
             const fakeIdGenerator = () => '123'
-            const likeCommentRepositoryPostgres = new LikeCommentRepositoryPostgres(pool, fakeIdGenerator)
+            const likesCommentRepositoryPostgres = new LikesCommentRepositoryPostgres(pool, fakeIdGenerator)
 
             // Action
-            await likeCommentRepositoryPostgres.likeComment(idComment, idUser)
+            await likesCommentRepositoryPostgres.likeComment(idComment, idUser)
 
             // Assert
             const result = await LikesCommentTableTestHelper.checkLikeInCommentExist('like-123')
@@ -79,10 +79,10 @@ describe('LikeCommentRepositoryPostgres', () => {
 
             // Arrange
             await LikesCommentTableTestHelper.likeComment({id:'like-123', userId:idUser, commentId:idComment})
-            const likeCommentRepositoryPostgres = new LikeCommentRepositoryPostgres(pool, {})
+            const likesCommentRepositoryPostgres = new LikesCommentRepositoryPostgres(pool, {})
 
             // Action  and Assert
-            await expect(likeCommentRepositoryPostgres.checkCommentIsLiked('like-123')).resolves.toEqual(true)
+            await expect(likesCommentRepositoryPostgres.checkCommentIsLiked(idComment, idUser)).resolves.toEqual(true)
         }),
         it('should return false if like in comment does not exist', async () => {
             // Creating Dependency (add user and thread)
@@ -108,10 +108,10 @@ describe('LikeCommentRepositoryPostgres', () => {
 
             // Arrange
             await LikesCommentTableTestHelper.likeComment({id:'like-123', userId:idUser, commentId:idComment})
-            const likeCommentRepositoryPostgres = new LikeCommentRepositoryPostgres(pool, {})
+            const likesCommentRepositoryPostgres = new LikesCommentRepositoryPostgres(pool, {})
 
             // Action  and Assert
-            await expect(likeCommentRepositoryPostgres.checkCommentIsLiked('like-433535')).resolves.toEqual(false)
+            await expect(likesCommentRepositoryPostgres.checkCommentIsLiked(idComment, 'user-101010')).resolves.toEqual(false)
         })
     })
 
@@ -140,13 +140,13 @@ describe('LikeCommentRepositoryPostgres', () => {
 
             // Arrange
             await LikesCommentTableTestHelper.likeComment({id:'like-123', userId:idUser, commentId:idComment})
-            const likeCommentRepositoryPostgres = new LikeCommentRepositoryPostgres(pool, {})
+            const likesCommentRepositoryPostgres = new LikesCommentRepositoryPostgres(pool, {})
 
             // Action  
-            await likeCommentRepositoryPostgres.unlikeComment('like-123')
+            await likesCommentRepositoryPostgres.unlikeComment(idComment, idUser)
 
             // Assert
-            const result = await LikesCommentTableTestHelper.checkLikeInCommentExist('like-123')
+            const result = await LikesCommentTableTestHelper.checkLikedInComment({commentId:idComment, userId: idUser})
             expect(result).toHaveLength(1)
             expect(result[0].is_liked).toStrictEqual(false)
         })
