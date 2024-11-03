@@ -9,6 +9,10 @@ class LikesCommentRepository {
     async checkCommentIsLiked(id){
         throw new Error("LIKES_COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED");
     }
+
+    async getCountLikeInComment(commentId){
+        throw new Error("LIKES_COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED");
+    }
 }
 
 module.exports = LikesCommentRepository

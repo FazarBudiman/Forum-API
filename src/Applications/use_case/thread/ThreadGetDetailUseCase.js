@@ -1,5 +1,6 @@
 class ThreadGetDetailUseCase {
-  constructor({ commentRepository, threadRepository, repliesRepository }) {
+  constructor({ likesCommentRepository, commentRepository, threadRepository, repliesRepository }) {
+    this._likesCommentRepository = likesCommentRepository
     this._commentRepository = commentRepository
     this._threadRepository = threadRepository
     this._repliesRepository = repliesRepository
@@ -15,14 +16,18 @@ class ThreadGetDetailUseCase {
 
     const comments = await Promise.all(
       commentDetail.map(async (comment) => {
-        // Ambil balasan untuk setiap komentar
-        const replies = await this._repliesRepository.getRepliesInComment(
-          comment.id
-        )
+        const likeComment = await this._likesCommentRepository.getCountLikeInComment(comment.id)
+        const likeCount = parseInt(likeComment)
+        
         // Jika komentar dihapus, ubah kontennya
         if (comment.is_delete) {
           comment.content = '**komentar telah dihapus**'
         }
+
+        // Ambil balasan untuk setiap komentar
+        const replies = await this._repliesRepository.getRepliesInComment(
+          comment.id
+        )
 
         // Map balasan untuk membangun struktur balasan
         const mappedReplies = replies.map((reply) => ({
@@ -40,6 +45,7 @@ class ThreadGetDetailUseCase {
           username: comment.username,
           date: comment.date,
           content: comment.content,
+          likeCount: likeCount,
           replies: mappedReplies
         }
       })
