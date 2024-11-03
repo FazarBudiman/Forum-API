@@ -2,6 +2,7 @@ const ThreadRepository = require('../../../../Domains/threads/ThreadRepository')
 const CommentRepository = require('../../../../Domains/comments/CommentRepository')
 const ThreadGetDetailUseCase = require('../ThreadGetDetailUseCase')
 const RepliesRepository = require('../../../../Domains/replies/RepliesRepository')
+const LikesCommentRepository = require('../../../../Domains/likesComment/LikesCommentRepository')
 
 describe('ThreadGetDetailUseCase', () => {
   it('should orchestrating the get detail action correctly', async () => {
@@ -13,6 +14,7 @@ describe('ThreadGetDetailUseCase', () => {
     const mockThreadRepository = new ThreadRepository()
     const mockCommentRepository = new CommentRepository()
     const mockRepliesRepository = new RepliesRepository()
+    const mockLikeCommentRepository = new LikesCommentRepository()
 
     const expectedReplies = [
       {
@@ -37,6 +39,7 @@ describe('ThreadGetDetailUseCase', () => {
         username: 'johndoe',
         date: '2024-10-15T01:58:30.051Z',
         content: 'sebuah comment',
+        likeCount: 0,
         is_delete: false
       },
       {
@@ -44,6 +47,7 @@ describe('ThreadGetDetailUseCase', () => {
         username: 'dicoding',
         date: '2024-10-15T01:58:30.177Z',
         content: 'P Komen',
+        likeCount: 0,
         is_delete: true
       }
     ]
@@ -67,11 +71,15 @@ describe('ThreadGetDetailUseCase', () => {
     mockRepliesRepository.getRepliesInComment = jest
       .fn()
       .mockImplementation(() => Promise.resolve(expectedReplies))
+    
+    mockLikeCommentRepository.getCountLikeInComment = jest.fn().mockImplementation(() => Promise.resolve(0))
 
     const threadGetDetailUseCase = new ThreadGetDetailUseCase({
+      likesCommentRepository: mockLikeCommentRepository,
       commentRepository: mockCommentRepository,
       threadRepository: mockThreadRepository,
-      repliesRepository: mockRepliesRepository
+      repliesRepository: mockRepliesRepository,
+
     })
 
     // Action
@@ -84,6 +92,8 @@ describe('ThreadGetDetailUseCase', () => {
     expect(mockThreadRepository.getDetailThread).toBeCalledWith(
       useCasePayload.threadId
     )
+
+    expect(mockLikeCommentRepository.getCountLikeInComment).toBeCalledWith(expectedComment[0].id)
     expect(mockRepliesRepository.getRepliesInComment).toBeCalledWith(
       expectedComment[0].id
     )
@@ -100,6 +110,7 @@ describe('ThreadGetDetailUseCase', () => {
           username: 'johndoe',
           date: '2024-10-15T01:58:30.051Z',
           content: 'sebuah comment',
+          likeCount: 0,
           replies: [
             {
               id: 'reply-123',
@@ -120,6 +131,7 @@ describe('ThreadGetDetailUseCase', () => {
           username: 'dicoding',
           date: '2024-10-15T01:58:30.177Z',
           content: '**komentar telah dihapus**',
+          likeCount: 0,
           replies: [
             {
               id: 'reply-123',
