@@ -4,7 +4,7 @@ const ThreadsTableTestHelper = {
   async addThread({
     id,
     title = 'Senin',
-    body = 'Hari ini adalah hari senin',
+    body = 'Hari ini adalah hari Minggu',
     owner,
     date = '2024-11-12'
   }) {
